@@ -14,7 +14,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final controller = GetIt.I.get<LoginController>();
-  final theme = GetIt.I.get<ThemeData>();
   final _formKey = GlobalKey<FormState>();
 
   bool showPassword = false;
@@ -78,157 +77,154 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Theme(
-      data: theme,
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    child: Image.asset(
-                      widget._path,
-                      fit: BoxFit.cover,
-                    ),
+        child: Scaffold(
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: Image.asset(
+                    widget._path,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 30),
-                  Column(
-                    children: [
-                      TextFormField(
-                        onChanged: (value) => controller.username = value,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Campo não pode ser vazio!";
-                          }
+                ),
+                const SizedBox(height: 30),
+                Column(
+                  children: [
+                    TextFormField(
+                      onChanged: (value) => controller.username = value,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo não pode ser vazio!";
+                        }
 
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Nome de usuário",
-                          filled: true,
-                          suffixIcon: IconButton(icon: const FaIcon(FontAwesomeIcons.user), onPressed: () {}),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Nome de usuário",
+                        filled: true,
+                        suffixIcon: IconButton(icon: const FaIcon(FontAwesomeIcons.user), onPressed: () {}),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(0, 255, 251, 251),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color.fromARGB(0, 255, 251, 251),
+                            width: 1,
                           ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.red,
+                            width: 1,
                           ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.red,
+                            width: 1,
                           ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        onChanged: (value) => controller.password = value,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Campo não pode ser vazio!";
-                          }
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      onChanged: (value) => controller.password = value,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo não pode ser vazio!";
+                        }
 
-                          return null;
-                        },
-                        obscureText: !showPassword,
-                        decoration: InputDecoration(
-                          labelText: "Senha",
-                          filled: true,
-                          suffixIcon: IconButton(
-                              icon: FaIcon(showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye),
-                              onPressed: () {
-                                setState(() {
-                                  showPassword = !showPassword;
-                                });
-                              }),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                        return null;
+                      },
+                      obscureText: !showPassword,
+                      decoration: InputDecoration(
+                        labelText: "Senha",
+                        filled: true,
+                        suffixIcon: IconButton(
+                            icon: FaIcon(showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye),
+                            onPressed: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            }),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(0, 255, 251, 251),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color.fromARGB(0, 255, 251, 251),
+                            width: 1,
                           ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.red,
+                            width: 1,
                           ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.red,
+                            width: 1,
                           ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  ElevatedButton(
-                    onPressed: !controller.validate || controller.status is Loading
-                        ? null
-                        : () async {
-                            if (_formKey.currentState!.validate()) {
-                              await controller.login();
-                            }
-                          },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      fixedSize: const Size(double.maxFinite, 50),
                     ),
-                    child: const Text("Entrar"),
-                  ),
-                  const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(context, "/recovery-password"),
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: Colors.grey.shade100,
-                      fixedSize: const Size(double.maxFinite, 50),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                ElevatedButton(
+                  onPressed: !controller.validate || controller.status is Loading
+                      ? null
+                      : () async {
+                          if (_formKey.currentState!.validate()) {
+                            await controller.login();
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text("Esqueceu sua senha?"),
+                    fixedSize: const Size(double.maxFinite, 50),
                   ),
-                  const SizedBox(height: 15),
-                ],
-              ),
+                  child: const Text("Entrar"),
+                ),
+                const SizedBox(height: 15),
+                TextButton(
+                  onPressed: () => Navigator.pushNamed(context, "/recovery-password"),
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Colors.grey.shade100,
+                    fixedSize: const Size(double.maxFinite, 50),
+                  ),
+                  child: const Text("Esqueceu sua senha?"),
+                ),
+                const SizedBox(height: 15),
+              ],
             ),
           ),
         ),
