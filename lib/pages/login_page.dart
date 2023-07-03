@@ -62,104 +62,92 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Column(
                   children: [
-                    Observer(
-                      builder: (_) {
-                        return IgnorePointer(
-                          ignoring: isLoading,
-                          child: TextFormField(
-                            textInputAction: TextInputAction.next,
-                            controller: nameEC,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return '';
-                              }
-                              return null;
-                            },
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.person, color: Colors.black),
-                              labelText: 'Usuário',
-                              labelStyle: TextStyle(
-                                color: AppColors.grey,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                            // onChanged: setName,
+                    IgnorePointer(
+                      ignoring: isLoading,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: nameEC,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.person, color: Colors.black),
+                          labelText: 'Usuário',
+                          labelStyle: TextStyle(
+                            color: AppColors.grey,
+                            fontSize: 20.0,
                           ),
-                        );
-                      },
+                        ),
+                        // onChanged: setName,
+                      ),
                     ),
-                    Observer(
-                      builder: (_) {
-                        return IgnorePointer(
-                          ignoring: isLoading,
-                          child: TextFormField(
-                            textInputAction: TextInputAction.done,
-                            controller: passwordEC,
-                            obscureText: ocultPassword,
-                            style: const TextStyle(
+                    IgnorePointer(
+                      ignoring: isLoading,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.done,
+                        controller: passwordEC,
+                        obscureText: ocultPassword,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                        onFieldSubmitted: (_) => widget.onLogin(nameEC.text, passwordEC.text),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.only(left: 10, top: 10),
+                            child: FaIcon(
+                              FontAwesomeIcons.lock,
                               color: Colors.black,
-                              fontSize: 20.0,
                             ),
-                            onFieldSubmitted: (_) => widget.onLogin(nameEC.text, passwordEC.text),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return '';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: const Padding(
-                                padding: EdgeInsets.only(left: 10, top: 10),
-                                child: FaIcon(
-                                  FontAwesomeIcons.lock,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  ocultPassword ? Icons.visibility : Icons.visibility_off,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () => togglePassword(),
-                              ),
-                              labelText: 'Senha',
-                              labelStyle: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                            // onChanged: _store.setPassword,
                           ),
-                        );
-                      },
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              ocultPassword ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.black,
+                            ),
+                            onPressed: () => togglePassword(),
+                          ),
+                          labelText: 'Senha',
+                          labelStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        // onChanged: _store.setPassword,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Observer(
-                builder: (_) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 32),
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: !isLoading && isFormValid ? () => widget.onLogin(nameEC.text, passwordEC.text) : null,
-                      child: isLoading
-                          ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
-                          : const Text(
-                              'Login',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                    ),
-                  );
-                },
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 32),
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: !isLoading && isFormValid ? () => widget.onLogin(nameEC.text, passwordEC.text) : null,
+                  child: isLoading
+                      ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+                      : const Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                ),
               )
             ],
           ),
