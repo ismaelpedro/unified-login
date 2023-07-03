@@ -31,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     controller = GetIt.I.get<LoginController>();
-    controller.onLogin = widget.onLogin;
     super.initState();
   }
 
@@ -108,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 20.0,
                         ),
                         // onFieldSubmitted: (_) => widget.onLogin(controller.nameEC.text, controller.passwordEC.text),
-                        onFieldSubmitted: (_) => controller.login,
+                        // onFieldSubmitted: (_) => controller.login(widget.onLogin),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return '';
@@ -147,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => controller.login,
+                  onPressed: () => controller.login(widget.onLogin),
                   // onPressed: !isLoading && isFormValid ? () => widget.onLogin(controller.nameEC.text, controller.passwordEC.text) : null,
                   child: isLoading
                       ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))

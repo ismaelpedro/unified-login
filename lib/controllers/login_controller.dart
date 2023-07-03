@@ -17,8 +17,6 @@ class LoginController extends ChangeNotifier {
   final nameEC = TextEditingController(text: kDebugMode ? 'ismael_cat' : '');
   final passwordEC = TextEditingController(text: kDebugMode ? '1234' : '');
 
-  Function(User?)? onLogin;
-
   bool get validate {
     return nameEC.text.isNotEmpty && passwordEC.text.isNotEmpty;
   }
@@ -28,7 +26,7 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<User?> login() async {
+  Future<void> login(Function(User?)? onLogin) async {
     _setStatus(Loading());
 
     final result = await _usecase(Credentials(Email(nameEC.text), passwordEC.text)).onLoading();
@@ -39,9 +37,9 @@ class LoginController extends ChangeNotifier {
 
     if (result.user != null) {
       _setStatus(Success("Login efetuado com sucesso"));
-      onLogin!(result.user);
-      return result.user;
+      if (onLogin != null) {
+        onLogin(result.user);
+      }
     }
-    return null;
   }
 }
