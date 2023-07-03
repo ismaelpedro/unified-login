@@ -1,5 +1,6 @@
 import 'package:artico_dependencies/artico_dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:unified_login/controllers/login_controller.dart';
 import 'package:unified_login/controllers/recover_controller.dart';
 import 'package:unified_login/repositories/auth_repository.dart';
@@ -12,7 +13,6 @@ import 'pages/login_page.dart';
 import 'pages/recovery_page.dart';
 
 final getIt = GetIt.instance;
-
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void setupGetIt(
@@ -71,6 +71,11 @@ class LoginModule extends StatelessWidget {
       locale: const Locale('pt', 'BR'),
       supportedLocales: const [Locale('pt', 'BR')],
       navigatorKey: navigatorKey,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       onGenerateRoute: (RouteSettings settings) {
         WidgetBuilder builder;
         switch (settings.name) {
