@@ -15,7 +15,7 @@ final class LoginUsecaseImpl implements LoginUsecase {
   @override
   Future<LoginRecord> call(Credentials credentials) async {
     if (!credentials.email()) {
-      return (token: null, error: InvalidData("email"));
+      return (user: null, error: InvalidData("email"));
     }
 
     return await _repository.login(credentials);

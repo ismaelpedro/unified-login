@@ -1,9 +1,8 @@
-import 'dart:convert';
-
-import 'package:unified_login/adapters/login_token_adapter.dart';
+import 'package:artico_dependencies/artico_dependencies.dart';
 import 'package:unified_login/errors/login_errors.dart';
 import 'package:unified_login/errors/recover_errors.dart' as recover;
 import 'package:unified_login/models/credentials.dart';
+import 'package:unified_login/models/user_dto.dart';
 import 'package:unified_login/records/login_record.dart';
 import 'package:unified_login/records/recover_record.dart';
 import 'package:unified_login/utils/client/client_interface.dart';
@@ -21,20 +20,31 @@ final class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<LoginRecord> login(Credentials credentials) async {
     try {
-      final token = 'Basic ${base64.encode(utf8.encode("${credentials.email.value}:${credentials.password}"))}';
-      final result = await _client.get("/login", headers: {"Authorization": token});
+      final deviceInfo = await DeviceInfoPlugin().androidInfo;
+      // final token = 'Basic ${base64.encode(utf8.encode("${credentials.email.value}:${credentials.password}"))}';
+
+      final result = await _client.post(
+        "/login",
+        {
+          'username': credentials.email.value,
+          'password': credentials.password,
+          'mac': deviceInfo.id,
+        },
+        // headers: {"Authorization": token},
+      );
 
       if (result.statusCode == 200) {
-        return (token: LoginTokenAdapter.fromMap(result.data["data"]), error: null);
+        // return (user: LoginTokenAdapter.fromMap(result.data["data"]), error: null);
+        return (user: UserDto.fromJson(result.data['data']['user']), error: null);
       }
 
       if (result.statusCode == 403) {
-        return (token: null, error: InvalidCredential());
+        return (user: null, error: InvalidCredential());
       }
 
       throw Exception("Unhandled request");
     } catch (e) {
-      return (token: null, error: BadRequest(e.toString()));
+      return (user: null, error: BadRequest(e.toString()));
     }
   }
 

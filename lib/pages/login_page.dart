@@ -1,11 +1,13 @@
 import 'package:artico_dependencies/artico_dependencies.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:unified_login/controllers/login_controller.dart';
 import 'package:unified_login/design_system/app_colors.dart';
+import 'package:unified_login/models/user.dart';
 
 class LoginPage extends StatefulWidget {
   final String version;
-  final Function(String, String) onLogin;
+  final Function(User?)? onLogin;
   final String pathLogoTop;
   final String pathLogoBottom;
 
@@ -22,11 +24,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginController controller;
+  final formKey = GlobalKey<FormState>();
   bool isLoading = false, isFormValid = kDebugMode, ocultPassword = true;
 
-  final formKey = GlobalKey<FormState>();
-  final nameEC = TextEditingController(text: kDebugMode ? 'ismael_cat' : '');
-  final passwordEC = TextEditingController(text: kDebugMode ? '1234' : '');
+  @override
+  void initState() {
+    controller = GetIt.I.get<LoginController>();
+    controller.onLogin = widget.onLogin;
+    super.initState();
+  }
 
   void toggleLoading(bool value) => setState(() => isLoading = value);
   void togglePassword() => setState(() => ocultPassword = !ocultPassword);
@@ -58,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
               Form(
                 key: formKey,
                 onChanged: () {
-                  isFormValid = formKey.currentState?.validate() ?? false;
+                  setState(() {
+                    isFormValid = formKey.currentState?.validate() ?? false;
+                  });
                 },
                 child: Column(
                   children: [
@@ -66,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                       ignoring: isLoading,
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
-                        controller: nameEC,
+                        controller: controller.nameEC,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
@@ -92,13 +101,14 @@ class _LoginPageState extends State<LoginPage> {
                       ignoring: isLoading,
                       child: TextFormField(
                         textInputAction: TextInputAction.done,
-                        controller: passwordEC,
+                        controller: controller.passwordEC,
                         obscureText: ocultPassword,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
                         ),
-                        onFieldSubmitted: (_) => widget.onLogin(nameEC.text, passwordEC.text),
+                        // onFieldSubmitted: (_) => widget.onLogin(controller.nameEC.text, controller.passwordEC.text),
+                        onFieldSubmitted: (_) => controller.login,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return '';
@@ -137,7 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: !isLoading && isFormValid ? () => widget.onLogin(nameEC.text, passwordEC.text) : null,
+                  onPressed: () => controller.login,
+                  // onPressed: !isLoading && isFormValid ? () => widget.onLogin(controller.nameEC.text, controller.passwordEC.text) : null,
                   child: isLoading
                       ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
                       : const Text(
@@ -163,26 +174,6 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 17,
                 ),
               ),
-              // FutureBuilder(
-              //   // future: _utils.getVersionApp(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return const ShimmerContainer(
-              //         width: 100,
-              //         height: 30,
-              //       );
-              //     }
-
-              //     return Text(
-              //       // 'Versão ${_utils.version}',
-              //       widget.version,
-              //       style: const TextStyle(
-              //         color: AppColors.grey,
-              //         fontSize: 17,
-              //       ),
-              //     );
-              //   },
-              // ),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -190,7 +181,6 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const Text('made by'),
                   Image.asset(
-                    // AppAssets.goAhead,
                     widget.pathLogoBottom,
                     width: 120,
                     height: 50,

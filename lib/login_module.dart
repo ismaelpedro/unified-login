@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:unified_login/controllers/login_controller.dart';
 import 'package:unified_login/controllers/recover_controller.dart';
+import 'package:unified_login/models/user.dart';
 import 'package:unified_login/repositories/auth_repository.dart';
 import 'package:unified_login/usecases/login_usecase.dart';
 import 'package:unified_login/usecases/recovery_password_usecase.dart';
@@ -47,7 +48,7 @@ class LoginModule extends StatelessWidget {
   final String baseUrl;
   final ThemeData theme;
   final String version;
-  final Function(String, String) onLogin;
+  final Function(User?)? onLogin;
   final String pathLogoTop;
   final String pathLogoBottom;
 
@@ -81,7 +82,7 @@ class LoginModule extends StatelessWidget {
         switch (settings.name) {
           case '/':
             builder = (_) => LoginPage(
-                  onLogin:  onLogin,
+                  onLogin: onLogin,
                   pathLogoBottom: pathLogoBottom,
                   pathLogoTop: pathLogoTop,
                   version: version,

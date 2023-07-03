@@ -1,4 +1,4 @@
 import 'package:unified_login/errors/login_errors.dart';
-import 'package:unified_login/models/login_token.dart';
+import 'package:unified_login/models/user.dart';
 
-typedef LoginRecord = ({LoginToken? token, LoginError? error});
+typedef LoginRecord = ({User? user, LoginError? error});
