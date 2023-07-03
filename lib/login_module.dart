@@ -47,7 +47,7 @@ class LoginModule extends StatelessWidget {
   final String baseUrl;
   final ThemeData theme;
   final String version;
-  final VoidCallback onLogin;
+  final Function(String, String) onLogin;
   final String pathLogoTop;
   final String pathLogoBottom;
 
@@ -81,7 +81,7 @@ class LoginModule extends StatelessWidget {
         switch (settings.name) {
           case '/':
             builder = (_) => LoginPage(
-                  onLogin: onLogin,
+                  onLogin:  onLogin,
                   pathLogoBottom: pathLogoBottom,
                   pathLogoTop: pathLogoTop,
                   version: version,

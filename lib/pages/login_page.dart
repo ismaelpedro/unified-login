@@ -5,7 +5,7 @@ import 'package:unified_login/design_system/app_colors.dart';
 
 class LoginPage extends StatefulWidget {
   final String version;
-  final VoidCallback onLogin;
+  final Function (String, String) onLogin;
   final String pathLogoTop;
   final String pathLogoBottom;
 
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.black,
                               fontSize: 20.0,
                             ),
-                            onFieldSubmitted: (_) => widget.onLogin(),
+                            onFieldSubmitted: (_) => widget.onLogin(nameEC.text, passwordEC.text),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return '';
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: !isLoading && isFormValid ? () => widget.onLogin() : null,
+                      onPressed: !isLoading && isFormValid ? () => widget.onLogin : null,
                       child: isLoading
                           ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
                           : const Text(
