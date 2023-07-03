@@ -6,6 +6,7 @@ import 'package:unified_login/pages/recovery_page.dart';
 import 'package:unified_login/repositories/auth_repository.dart';
 import 'package:unified_login/usecases/login_usecase.dart';
 import 'package:unified_login/usecases/recovery_password_usecase.dart';
+import 'package:unified_login/utils/client/client_interface.dart';
 import 'package:unified_login/utils/client/dio_client.dart';
 import 'package:unified_login/utils/client/track_interceptor.dart';
 
@@ -15,11 +16,15 @@ final getIt = GetIt.instance;
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void setupGetIt(String baseUrl, String redirectTo, Function(String token) callback) {
-  getIt.registerLazySingleton(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
+void setupGetIt(
+  String baseUrl,
+  String redirectTo,
+  Function(String token) callback,
+) {
+  getIt.registerLazySingleton<Client>(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()));
-  getIt.registerLazySingleton(() => LoginUsecaseImpl(getIt()));
-  getIt.registerLazySingleton(() => RecoveryPasswordUsecaseImpl(getIt()));
+  getIt.registerLazySingleton<LoginUsecase>(() => LoginUsecaseImpl(getIt()));
+  getIt.registerLazySingleton<RecoveryPasswordUsecase>(() => RecoveryPasswordUsecaseImpl(getIt()));
   getIt.registerLazySingleton(() => LoginController(getIt(), redirectTo, callback));
   getIt.registerLazySingleton(() => RecoverController(getIt(), redirectTo));
 }
