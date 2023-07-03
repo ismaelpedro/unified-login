@@ -21,7 +21,7 @@ void setupGetIt(
   String baseUrl,
 ) {
   if (!getIt.isRegistered<Client>()) {
-    getIt.registerLazySingleton(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
+    getIt.registerLazySingleton<Client>(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
   }
 
   if (!getIt.isRegistered<AuthRepository>()) {
