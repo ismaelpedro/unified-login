@@ -12,6 +12,7 @@ import 'package:unified_login/utils/client/track_interceptor.dart';
 
 import 'pages/login_page.dart';
 import 'pages/recovery_page.dart';
+import 'utils/client/client_interface.dart';
 
 final getIt = GetIt.instance;
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -19,7 +20,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void setupGetIt(
   String baseUrl,
 ) {
-  if (!getIt.isRegistered<DioClient>()) {
+  if (!getIt.isRegistered<Client>()) {
     getIt.registerLazySingleton(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
   }
 

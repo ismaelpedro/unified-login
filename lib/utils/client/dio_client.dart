@@ -5,7 +5,11 @@ import 'package:unified_login/utils/client/result_response.dart';
 class DioClient extends Client {
   late Dio _dio;
 
-  DioClient(String baseUrl, {List<InterceptorsWrapper> interceptors = const [], int receiveTimeout = 40000}) {
+  DioClient(
+    String baseUrl, {
+    List<InterceptorsWrapper> interceptors = const [],
+    int receiveTimeout = 40000,
+  }) {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
@@ -17,7 +21,17 @@ class DioClient extends Client {
         },
       ),
     );
-
+    _dio.interceptors.add(
+      TalkerDioLogger(
+        settings: const TalkerDioLoggerSettings(
+          printRequestHeaders: true,
+          printResponseHeaders: true,
+          printResponseMessage: true,
+          printRequestData: true,
+          printResponseData: true,
+        ),
+      ),
+    );
     _dio.interceptors.addAll(interceptors);
   }
 
