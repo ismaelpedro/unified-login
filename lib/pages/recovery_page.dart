@@ -1,6 +1,5 @@
 import 'package:artico_dependencies/artico_dependencies.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:unified_login/controllers/recover_controller.dart';
 import 'package:unified_login/models/status.dart';
 
@@ -12,8 +11,8 @@ class RecoveryPage extends StatefulWidget {
 }
 
 class _RecoveryPageState extends State<RecoveryPage> {
-  final controller = Modular.get<RecoverController>();
-  final theme = Modular.get<ThemeData>();
+  final controller = GetIt.I.get<RecoverController>();
+  final theme = GetIt.I.get<ThemeData>();
 
   final _overlayLoading = OverlayEntry(
     builder: (context) {

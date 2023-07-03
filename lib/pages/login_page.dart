@@ -1,6 +1,5 @@
 import 'package:artico_dependencies/artico_dependencies.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:unified_login/controllers/login_controller.dart';
 import 'package:unified_login/models/status.dart';
 
@@ -14,8 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final controller = Modular.get<LoginController>();
-  final theme = Modular.get<ThemeData>();
+  final controller = GetIt.I.get<LoginController>();
+  final theme = GetIt.I.get<ThemeData>();
   final _formKey = GlobalKey<FormState>();
 
   bool showPassword = false;
@@ -217,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 15),
                   TextButton(
-                    onPressed: () => Modular.to.pushNamed("/recovery-password"),
+                    onPressed: () => Navigator.pushNamed(context, "/recovery-password"),
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:unified_login/login_module.dart';
 import 'package:unified_login/models/status.dart';
 import 'package:unified_login/usecases/recovery_password_usecase.dart';
 
@@ -33,7 +33,7 @@ class RecoverController extends ChangeNotifier {
 
     if (result.success) {
       _setStatus(Success("Email de recuperação enviado com sucesso"));
-      Modular.to.navigate(_redirectTo);
+      Navigator.pushReplacementNamed(navigatorKey.currentContext!, _redirectTo);
     }
   }
 }

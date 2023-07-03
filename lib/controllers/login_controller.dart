@@ -1,6 +1,6 @@
 import 'package:artico_dependencies/artico_dependencies.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:unified_login/login_module.dart';
 import 'package:unified_login/models/credentials.dart';
 import 'package:unified_login/models/status.dart';
 import 'package:unified_login/usecases/login_usecase.dart';
@@ -38,7 +38,7 @@ class LoginController extends ChangeNotifier {
     if (result.token != null) {
       _setStatus(Success("Login efetuado com sucesso"));
       _callback(result.token!.accessToken);
-      Modular.to.navigate(_redirectTo);
+      Navigator.pushReplacementNamed(navigatorKey.currentContext!, _redirectTo);
     }
   }
 }
