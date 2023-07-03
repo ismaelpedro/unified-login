@@ -27,6 +27,7 @@ class LoginController extends ChangeNotifier {
   }
 
   Future<void> login(Function(User?)? onLogin) async {
+    _setStatus(Success("Login BATEU AQUI"));
     _setStatus(Loading());
 
     final result = await _usecase(Credentials(Email(nameEC.text), passwordEC.text)).onLoading();
