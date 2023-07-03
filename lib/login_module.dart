@@ -5,7 +5,6 @@ import 'package:unified_login/controllers/recover_controller.dart';
 import 'package:unified_login/repositories/auth_repository.dart';
 import 'package:unified_login/usecases/login_usecase.dart';
 import 'package:unified_login/usecases/recovery_password_usecase.dart';
-import 'package:unified_login/utils/client/client_interface.dart';
 import 'package:unified_login/utils/client/dio_client.dart';
 import 'package:unified_login/utils/client/track_interceptor.dart';
 
@@ -19,12 +18,29 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void setupGetIt(
   String baseUrl,
 ) {
-  getIt.registerLazySingleton<Client>(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()));
-  getIt.registerLazySingleton<LoginUsecase>(() => LoginUsecaseImpl(getIt()));
-  getIt.registerLazySingleton<RecoveryPasswordUsecase>(() => RecoveryPasswordUsecaseImpl(getIt()));
-  getIt.registerLazySingleton(() => LoginController(getIt()));
-  getIt.registerLazySingleton(() => RecoverController(getIt()));
+  if (!getIt.isRegistered(instance: DioClient)) {
+    getIt.registerLazySingleton(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
+  }
+
+  if (!getIt.isRegistered<AuthRepository>()) {
+    getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()));
+  }
+
+  if (!getIt.isRegistered<LoginUsecase>()) {
+    getIt.registerLazySingleton<LoginUsecase>(() => LoginUsecaseImpl(getIt()));
+  }
+
+  if (!getIt.isRegistered<RecoveryPasswordUsecase>()) {
+    getIt.registerLazySingleton<RecoveryPasswordUsecase>(() => RecoveryPasswordUsecaseImpl(getIt()));
+  }
+
+  if (!getIt.isRegistered<LoginController>()) {
+    getIt.registerLazySingleton<LoginController>(() => LoginController(getIt()));
+  }
+
+  if (!getIt.isRegistered<RecoverController>()) {
+    getIt.registerLazySingleton<RecoverController>(() => RecoverController(getIt()));
+  }
 }
 
 class LoginModule extends StatelessWidget {
@@ -60,10 +76,10 @@ class LoginModule extends StatelessWidget {
         switch (settings.name) {
           case '/':
             builder = (_) => LoginPage(
-                  onLogin: settings.arguments as Function(),
-                  pathLogoBottom: settings.arguments as String,
-                  pathLogoTop: settings.arguments as String,
-                  version: settings.arguments as String,
+                  onLogin: onLogin,
+                  pathLogoBottom: pathLogoBottom,
+                  pathLogoTop: pathLogoTop,
+                  version: version,
                 );
             break;
 
