@@ -12,7 +12,6 @@ class RecoveryPage extends StatefulWidget {
 
 class _RecoveryPageState extends State<RecoveryPage> {
   final controller = GetIt.I.get<RecoverController>();
-  final theme = GetIt.I.get<ThemeData>();
 
   final _overlayLoading = OverlayEntry(
     builder: (context) {
@@ -74,67 +73,64 @@ class _RecoveryPageState extends State<RecoveryPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Theme(
-        data: theme,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text("Recuperação de senha"),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextField(
-                  onChanged: (value) => controller.username = value,
-                  decoration: InputDecoration(
-                    labelText: "Nome de usuário",
-                    filled: true,
-                    suffixIcon: IconButton(icon: const FaIcon(FontAwesomeIcons.user), onPressed: () {}),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Recuperação de senha"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              TextField(
+                onChanged: (value) => controller.username = value,
+                decoration: InputDecoration(
+                  labelText: "Nome de usuário",
+                  filled: true,
+                  suffixIcon: IconButton(icon: const FaIcon(FontAwesomeIcons.user), onPressed: () {}),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(0, 255, 251, 251),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color.fromARGB(0, 255, 251, 251),
+                      width: 1,
                     ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.red,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.red,
+                      width: 1,
                     ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.red,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.red,
+                      width: 1,
                     ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: controller.recover,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    fixedSize: const Size(double.maxFinite, 50),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: controller.recover,
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text("Enviar email"),
-                )
-              ],
-            ),
+                  fixedSize: const Size(double.maxFinite, 50),
+                ),
+                child: const Text("Enviar email"),
+              )
+            ],
           ),
         ),
       ),
