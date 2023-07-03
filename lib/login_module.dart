@@ -18,7 +18,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void setupGetIt(
   String baseUrl,
 ) {
-  if (!getIt.isRegistered(instance: DioClient)) {
+  if (!getIt.isRegistered<DioClient>()) {
     getIt.registerLazySingleton(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
   }
 

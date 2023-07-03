@@ -169,8 +169,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Text(
-                // 'Versão ${_utils.version}',
-                widget.version,
+                'Versão ${widget.version}',
                 style: const TextStyle(
                   color: AppColors.grey,
                   fontSize: 17,
