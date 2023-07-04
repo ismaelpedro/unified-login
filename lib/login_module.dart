@@ -8,7 +8,6 @@ import 'package:unified_login/repositories/auth_repository.dart';
 import 'package:unified_login/usecases/login_usecase.dart';
 import 'package:unified_login/usecases/recovery_password_usecase.dart';
 import 'package:unified_login/utils/client/dio_client.dart';
-import 'package:unified_login/utils/client/track_interceptor.dart';
 
 import 'pages/login_page.dart';
 import 'pages/recovery_page.dart';
@@ -21,7 +20,10 @@ void setupGetIt(
   String baseUrl,
 ) {
   if (!getIt.isRegistered<Client>()) {
-    getIt.registerLazySingleton<Client>(() => DioClient(baseUrl, interceptors: [TrackInterceptor()]));
+    getIt.registerLazySingleton<Client>(() => DioClient(
+          baseUrl,
+          // interceptors: [TrackInterceptor()],
+        ));
   }
 
   if (!getIt.isRegistered<AuthRepository>()) {

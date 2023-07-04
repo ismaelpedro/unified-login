@@ -1,6 +1,3 @@
-
-import 'package:artico_dependencies/artico_dependencies.dart';
-
 class Credentials {
   final Email email;
   final String password;
@@ -14,6 +11,7 @@ class Email {
   Email(this.value);
 
   bool call() {
-    return EmailValidator.validate(value);
+    // return EmailValidator.validate(value);
+    return true;
   }
 }
