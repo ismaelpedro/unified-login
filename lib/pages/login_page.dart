@@ -40,9 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
@@ -55,7 +53,6 @@ class _LoginPageState extends State<LoginPage> {
                 width: 300,
                 height: 250,
                 child: Image.asset(
-                  // AppAssets.gqHealth,
                   widget.pathLogoTop,
                   fit: BoxFit.fitWidth,
                 ),
@@ -64,9 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               Form(
                 key: formKey,
                 onChanged: () {
-                  setState(() {
-                    isFormValid = formKey.currentState?.validate() ?? false;
-                  });
+                  setState(() => isFormValid = formKey.currentState?.validate() ?? false);
                 },
                 child: Column(
                   children: [
@@ -106,8 +101,11 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.black,
                           fontSize: 20.0,
                         ),
-                        // onFieldSubmitted: (_) => widget.onLogin(controller.nameEC.text, controller.passwordEC.text),
-                        // onFieldSubmitted: (_) => controller.login(widget.onLogin),
+                        onFieldSubmitted: (_) async {
+                          toggleLoading(true);
+                          await controller.login(widget.onLogin);
+                          toggleLoading(false);
+                        },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return '';
@@ -146,8 +144,13 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => controller.login(widget.onLogin),
-                  // onPressed: !isLoading && isFormValid ? () => widget.onLogin(controller.nameEC.text, controller.passwordEC.text) : null,
+                  onPressed: isLoading && !isFormValid
+                      ? null
+                      : () async {
+                          toggleLoading(true);
+                          await controller.login(widget.onLogin);
+                          toggleLoading(false);
+                        },
                   child: isLoading
                       ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
                       : const Text(
